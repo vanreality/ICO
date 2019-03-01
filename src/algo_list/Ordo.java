@@ -1,10 +1,9 @@
 package algo_list;
 
-public class main {
+public class Ordo {
 
 	public static void main(String[] args) {
-		// TODO Auto-generated method stub
 
 	}
-
+	
 }
