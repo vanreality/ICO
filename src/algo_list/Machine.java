@@ -15,15 +15,14 @@ public class Machine {
 	}
 	
 	public void addTache(Tache t) {
-		if (num != 0 && t.getC()[num - 1] > this.dispo) {
-			t.setT(num, t.getC()[num - 1]);
-			this.dispo += t.getC()[num - 1];
+		if (num != 0 && t.getC(num - 1) > this.dispo) {
+			t.setT(num, t.getC(num - 1));
+			this.dispo = t.getC(num - 1);
 		}
 		else t.setT(num, dispo);
 		
 		this.dispo += t.getP(num);
 		t.setC(num, dispo);
-		t.setStatus(num, true);
 		this.list.add(t);
 	}
 	
@@ -35,9 +34,6 @@ public class Machine {
 	public String toString() {
 		String s = "";
 		s += "Machine " + num +  ", dispo = " + dispo + " : \n";
-//		for (Tache t : list) {
-//			s += t + "\n";
-//		}
 		return s;
 	}
 

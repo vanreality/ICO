@@ -7,7 +7,6 @@ public class Tache implements Comparable<Tache>{
 	private final int[] p;
 	private int[] t = {0, 0, 0};
 	private int[] C = {0, 0, 0};
-	private boolean[] status = {false, false, false};
 	
 	public Tache(int id, int[] p) {
 		this.id = id;
@@ -19,20 +18,19 @@ public class Tache implements Comparable<Tache>{
 		this.p = t.p;
 		this.t = t.t;
 		this.C = t.C;
-		this.status = t.status;
 	}
 
 	//Getters and setters
-	public int[] getT() {
-		return t;
+	public int getT(int num) {
+		return t[num];
 	}
 
 	public void setT(int num, int t) {
 		this.t[num] = t;
 	}
 
-	public int[] getC() {
-		return C;
+	public int getC(int num) {
+		return C[num];
 	}
 
 	public void setC(int num, int c) {
@@ -43,18 +41,13 @@ public class Tache implements Comparable<Tache>{
 		return p[num];
 	}
 	
-	public boolean[] getStatus() {
-		return status;
-	}
-	
-	public void setStatus(int num, boolean s) {
-		this.status[num] = s;
+	public int getID() {
+		return id;
 	}
 
 	@Override
 	public String toString() {
-		return "Tache " +  id + " [p=" + Arrays.toString(p) + ", t=" + Arrays.toString(t) + ", C=" + Arrays.toString(C)
-				+ ", status=" + Arrays.toString(status) + "]";
+		return "Tache " +  id + " [p=" + Arrays.toString(p) + ", t=" + Arrays.toString(t) + ", C=" + Arrays.toString(C) + "]";
 	}
 
 	@Override
