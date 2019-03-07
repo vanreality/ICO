@@ -12,11 +12,6 @@ public class Liste {
 		this.list = new ArrayList<>();
 	}
 	
-	public Tache getTache(int index) {
-		Tache t = new Tache(this.list.get(index));
-		return t;
-	}
-	
 	public void addTache(Tache t) {
 		this.list.add(t);
 	}

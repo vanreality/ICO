@@ -4,25 +4,27 @@ import java.util.List;
 import java.util.ArrayList;
 
 public class Machine {
-	private int dispo; //available date
-	private List<Tache> list;
-	private int num;
+	private int dispo; //Available date
+	private List<Tache> list; //List of tasks operated in the machine
+	private int id; //id of machine
 	
-	public Machine(int num) {
+	//Constructor
+	public Machine(int id) {
 		this.dispo = 0;
 		this.list = new ArrayList<>();
-		this.num = num;
+		this.id = id;
 	}
 	
 	public void addTache(Tache t) {
-		if (num != 0 && t.getC(num - 1) > this.dispo) {
-			t.setT(num, t.getC(num - 1));
-			this.dispo = t.getC(num - 1);
+		//task start when machine is available or task is finished in the previous machine
+		if (id != 0 && t.getC(id - 1) > this.dispo) {
+			t.setT(id, t.getC(id - 1));
+			this.dispo = t.getC(id - 1);
 		}
-		else t.setT(num, dispo);
+		else t.setT(id, dispo);
 		
-		this.dispo += t.getP(num);
-		t.setC(num, dispo);
+		this.dispo += t.getP(id);
+		t.setC(id, dispo);
 		this.list.add(t);
 	}
 	
@@ -33,7 +35,7 @@ public class Machine {
 	@Override
 	public String toString() {
 		String s = "";
-		s += "Machine " + num +  ", dispo = " + dispo + " : \n";
+		s += "Machine " + id +  ", dispo = " + dispo + " : \n";
 		return s;
 	}
 
