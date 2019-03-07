@@ -31,5 +31,8 @@ public class Ville {
 	public int getDistance(String ville) {
 		return distance[ref.get(ville)];
 	}
+	public int getID() {
+		return(ref.get(this.name));
+	}
 
 }

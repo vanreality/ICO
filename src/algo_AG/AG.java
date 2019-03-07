@@ -12,12 +12,20 @@ public class AG {
 				new Ville("Marseille", new int[] {480,300,820,750,0,500}),
 				new Ville("Dijon", new int[] {660,200,630,310,500,0}),
 				};
-		int generations = 50;
-		int n = 20;	
+		int generations = 100;
+		int n = 10;	
+		double p = 0.2;
 		Population population = new Population(n, carte);
-		System.out.print(population+"\n\n");
+
+		for(int i =0;i<generations;i++) {
 		population.Selection();
-		System.out.print(population+"\n\n");
+
+		population.Reproduction(n);
+		
+		population.Mutation(p);
+		}
+		population.tri();
+		System.out.println(population.best());
 	}
 
 }

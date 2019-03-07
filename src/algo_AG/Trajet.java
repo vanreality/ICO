@@ -2,6 +2,13 @@ package algo_AG;
 import java.util.ArrayList;
 import java.util.Collections;
 import java.util.List;
+import java.util.ListIterator;
+import java.util.TreeSet;
+import java.util.concurrent.ThreadLocalRandom;
+
+import static java.util.Comparator.comparingInt;
+import static java.util.stream.Collectors.collectingAndThen;
+import static java.util.stream.Collectors.toCollection;
 
 public class Trajet implements Comparable {
 	private List<Ville> etapes = new ArrayList<Ville>();
@@ -11,11 +18,47 @@ public class Trajet implements Comparable {
 	
 	public Trajet(Ville[] carte) {      //create new random trip
 		this.nbVilles = carte.length;
-		
+		Ville temp;
 		for(int i=0;i<nbVilles;i++) {
 			etapes.add(new Ville(carte[i]));
 		}
 		Collections.shuffle(etapes);
+		for(int j = 0;j<etapes.size();j++) {
+			if(etapes.get(j).getName()=="Bordeaux") {
+				temp = etapes.get(j);
+				etapes.remove(j);
+				etapes.add(0, temp);
+			}
+		}
+		this.calculateFitness();
+	}
+	
+	
+	public Trajet(Trajet t1, Trajet t2) {
+		List<Ville> inter = new ArrayList<Ville>();		
+		for(int i = 0; i<t1.getnbVilles();i++) {
+			inter.add(new Ville(t1.getEtapes().get(i)));
+			inter.add(new Ville(t2.getEtapes().get(i)));
+		}
+		String s="";
+		for(Ville v : inter) {
+			s+= v.getName()+", ";
+		}
+			
+		boolean present=false;
+		int j;
+		for(int i =0; i<inter.size();i++) {
+			for(j =0; j<this.etapes.size();j++) {
+				if(this.etapes.get(j).getName()==inter.get(i).getName())
+					present=true;
+			}
+			if(present == false)
+				this.etapes.add(inter.get(i));
+			present=false;
+			
+		}
+		
+		this.nbVilles = this.etapes.size();
 		this.calculateFitness();
 	}
 	public void calculateFitness() {
@@ -23,9 +66,16 @@ public class Trajet implements Comparable {
 		for(int i=0;i<nbVilles-1;i++) {
 			this.fitness+=etapes.get(i).getDistance(etapes.get(i+1).getName());
 		}
+		this.fitness+=etapes.get(0).getDistance(etapes.get(etapes.size()-1).getName());
 	}
 	public int getFitness() {
 		return this.fitness;
+	}
+	public int getnbVilles() {
+		return this.nbVilles;
+	}
+	public List<Ville> getEtapes() {
+		return this.etapes;
 	}
 	public String toString() {
 		String s="";
@@ -33,12 +83,21 @@ public class Trajet implements Comparable {
 			s+= v.getName()+", ";
 		}
 			
-		return s+"  "+this.fitness;
+		return s+etapes.get(0).getName()+"  "+this.fitness;
 
 	}
 	@Override
 	public int compareTo(Object arg0) {
 		
 		return ((Trajet)arg0).getFitness()-this.fitness;
+	}
+	public Trajet Reproduction(Trajet tr) {
+		Trajet enfant = new Trajet(this, tr);
+		
+		return enfant;
+	}
+	public void echange(int nb1, int nb2) {
+		Collections.swap(this.etapes, nb1, nb2);
+		this.calculateFitness();
 	}
 }
