@@ -13,7 +13,7 @@ public class Population {
 	
 	public Population(int n, Ville[] carte) {
 		for (i = 0;i<n;i++) {
-			population.add(new Trajet(carte));
+			population.add(new Trajet(1));
 		}
 	}
 	public void tri() {
